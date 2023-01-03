@@ -1,13 +1,19 @@
-// src/redux/modules/todosSlice.js
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//초기값
-const initialState = {
+interface initialstate {
+  posts: any;
+  post: any;
+  isLoading: boolean;
+  error: any;
+}
+
+const initialState: initialstate = {
   posts: [],
   isLoading: false,
   error: null,
 };
+
 
 //본문 추가하기  Thunk
 export const __postTodos = createAsyncThunk(
@@ -22,6 +28,20 @@ export const __postTodos = createAsyncThunk(
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
+          }
+  }
+);
+
+export const __deleteTodo = createAsyncThunk(
+  "getPostsStatics",
+  async (payload: number, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `https://heetemp.shop/api/post/${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (e) {
+      alert(`getPostsStaticsError: ${e}`);
     }
   }
 );
@@ -44,5 +64,6 @@ export const postsSlice = createSlice({
     },
   }})
   
+
 export const {} = postsSlice.actions;
 export default postsSlice.reducer;
