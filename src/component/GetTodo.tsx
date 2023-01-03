@@ -1,39 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { __getTodo } from "../redux/modules/postsSlice";
+import DeleteTodo from "./DeleteTodo";
 
 const GetTodo = () => {
-  type todoPreset = {
-    todo: string;
-    id: string;
-  };
+  const todos = useSelector((state: any) => state.posts.postInfo);
+  const dispatch = useDispatch();
 
-  const [todos, setTodos] = useState<todoPreset[]>([
-    { id: "1", todo: "hihi" },
-    { id: "2", todo: "hihi2" },
-    { id: "3", todo: "hihi3" },
-    { id: "4", todo: "hihi4" },
-  ]);
-  //   const fetchData = async () => {
-  //     const data = await axios.get("");
-  //     setTodos(data.data);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchData();
-  //   }, []);
-
-  const onClickDeleteHandler = (id: string) => {
-    const filtered = todos.filter((todo) => todo.id !== id);
-    setTodos(filtered);
-  };
+  useEffect(() => {
+    dispatch(__getTodo());
+  }, [dispatch]);
 
   return (
     <div>
-      {todos.map((todo) => {
+      {todos.map((todo: any) => {
         return (
           <div style={{ display: "flex" }}>
             <div key={todo.id}>{todo.todo}</div>
-            <button onClick={() => onClickDeleteHandler(todo.id)}>삭제</button>
+            <DeleteTodo postID={todo.id} />
           </div>
         );
       })}

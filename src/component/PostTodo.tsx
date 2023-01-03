@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { __postTodos } from "../redux/modules/postsSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 // import {} from ''
 
 const PostTodo = () => {
@@ -8,8 +11,10 @@ const PostTodo = () => {
     content: string;
   }
 
-   //서버에 저장된 todo가져오기
-   useEffect(() => {
+  const dispatch = useDispatch();
+
+  //서버에 저장된 todo가져오기
+  useEffect(() => {
     dispatch(__postTodos());
   }, [dispatch]);
 
