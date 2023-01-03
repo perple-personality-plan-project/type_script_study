@@ -4,6 +4,7 @@ import "./index.css";
 // import App from './App';
 import reportWebVitals from "./reportWebVitals";
 import GetTodo from "./component/GetTodo";
+import PostTodo from "./component/PostTodo";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,6 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <GetTodo />
+    <PostTodo />
   </React.StrictMode>
 );
 
