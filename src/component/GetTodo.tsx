@@ -6,8 +6,9 @@ import { __getTodo } from "../redux/modules/postsSlice";
 import DeleteTodo from "./DeleteTodo";
 
 const GetTodo = () => {
-  const todos = useSelector((state: any) => state.posts.postInfo);
+  const { posts } = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
+  console.log(posts);
 
   useEffect(() => {
     dispatch(__getTodo());
@@ -15,14 +16,17 @@ const GetTodo = () => {
 
   return (
     <div>
-      {todos.map((todo: any) => {
-        return (
-          <div style={{ display: "flex" }}>
-            <div key={todo.id}>{todo.todo}</div>
-            <DeleteTodo postID={todo.id} />
-          </div>
-        );
-      })}
+      hihi
+      {posts &&
+        posts.map((todo: any) => {
+          return (
+            <div key={todo.postId}>
+              <div>{todo.postId}</div>
+              <div>{todo.title}</div>
+              <div>{todo.content}</div>
+            </div>
+          );
+        })}
     </div>
   );
 };

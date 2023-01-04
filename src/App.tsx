@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <PostTodo />
-      <GetTodo />
+      {/* <GetTodo /> */}
     </div>
   );
 }

@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface initialstate {
-  posts: {};
+  posts: [];
   isLoading: boolean;
   error: any;
 }
 
 const initialState: initialstate = {
-  posts: {},
+  posts: [],
   isLoading: false,
   error: null,
 };
@@ -49,8 +49,8 @@ export const __getTodo: any = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get("https://heetemp.shop/api/post/");
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(data.todo);
+      return thunkAPI.fulfillWithValue(data.todo);
     } catch (e) {
       alert(`getPostsStaticsError: ${e}`);
     }

@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import { __postTodos } from "../redux/modules/postsSlice";
-import { useDispatch } from "react-redux";
+import { __postTodos, __getTodo } from "../redux/modules/postsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 // import {} from ''
+interface todoPreset {
+  id: number;
+  title: string;
+  content: string;
+}
+
+interface postPreset {
+  postId: number;
+  title: string;
+  content: string;
+  createdAt?: string;
+}
 
 const PostTodo = () => {
-  interface todoPreset {
-    id: number;
-    title: string;
-    content: string;
-  }
-
+  const { posts } = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
 
+  console.log(posts);
+
   //서버에 저장된 todo가져오기
-  useEffect(() => {
-    dispatch(__postTodos());
-  }, [dispatch]);
 
   const [todos, setTodos] = useState<todoPreset[]>([
     { id: 1, title: "실전프로젝트1", content: "타입스크립트" },
@@ -26,13 +32,18 @@ const PostTodo = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  useEffect(() => {
+    dispatch(__getTodo());
+  }, [dispatch]);
+
   const addHandler = () => {
-    const newTodo = {
-      id: todos.length + 1,
-      title: title,
-      content: content,
-    };
-    setTodos([...todos, newTodo]);
+    dispatch(__postTodos({ title, content }));
+    // const newTodo = {
+    //   id: todos.length + 1,
+    //   title: title,
+    //   content: content,
+    // };
+    // setTodos([...todos, newTodo]);
   };
 
   return (
@@ -45,15 +56,13 @@ const PostTodo = () => {
         <button onClick={addHandler}>추가하기</button>
       </div>
       <div>
-        <div className="wrapper">
-          {todos.map((todo) => {
-            return (
-              <div key={todo.id}>
-                {todo.title},{todo.content}
-              </div>
-            );
-          })}
-        </div>
+        {posts.map((post: postPreset) => {
+          return (
+            <div key={post.postId}>
+              {post.title},{post.content}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
